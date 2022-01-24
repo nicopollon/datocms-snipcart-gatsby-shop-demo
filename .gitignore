@@ -6,4 +6,9 @@ node_modules
 /public
 .DS_Store
 
+# dotenv environment variables files
+
 .env*
+.env
+.env.development
+.env.production

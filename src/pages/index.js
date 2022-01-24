@@ -1,7 +1,16 @@
-import React from 'react'
-import { StaticQuery, graphql } from 'gatsby'
-import Layout from "../layouts/index"
-import Img from 'gatsby-image'
+import React from "react";
+import { StaticQuery, graphql } from "gatsby";
+import Layout from "../layouts/index";
+import Img from "gatsby-image";
+import { Catalogue, CatalogueItem } from "../style/Catalogue";
+import {
+  Product,
+  ProductBuy,
+  ProductDetails,
+  ProductImage,
+  ProductPrice,
+  ProductName,
+} from "../style/Product";
 
 export default () => (
   <StaticQuery
@@ -29,37 +38,35 @@ export default () => (
         }
       }
     `}
-render={data => (
-  <Layout site={data.site}>
-    <div className="Catalogue">
-      {
-        data.products.edges.map(({ node: product }) => (
-          <div className="Catalogue__item" key={product.id}>
-            <div
-              className="Product snipcart-add-item"
-              data-item-id={product.id}
-              data-item-price={product.price}
-              data-item-image={product.image.url}
-              data-item-name={product.name}
-              data-item-url={`/`}
-            >
-              <div className="Product__image">
-                <Img sizes={product.image.sizes} />
-              </div> <div className="Product__details">
-                <div className="Product__name">
-                  {product.name}
-                  <div className="Product__price">
-                    {product.price}€
-                  </div>
-                </div>
-                <span className="Product__buy">Buy now</span>
-              </div>
-            </div>
-          </div>
-        ))
-      }
-    </div>
-  </Layout>
-     )}
-   />
-)
+    render={(data) => (
+      <Layout site={data.site}>
+        <Catalogue>
+          {data.products.edges.map(({ node: product }) => (
+            <CatalogueItem key={product.id}>
+              <Product>
+                <ProductImage>
+                  <Img sizes={product.image.sizes} />
+                </ProductImage>{" "}
+                <ProductDetails>
+                  <ProductName>
+                    {product.name}
+                    <ProductPrice>{product.price}€</ProductPrice>
+                  </ProductName>
+                  <ProductBuy
+                    data-item-id={product.id}
+                    data-item-price={product.price}
+                    data-item-image={product.image.url}
+                    data-item-name={product.name}
+                    data-item-url={`https://suspicious-snyder-3fa378.netlify.app/`}
+                  >
+                    Buy now
+                  </ProductBuy>
+                </ProductDetails>
+              </Product>
+            </CatalogueItem>
+          ))}
+        </Catalogue>
+      </Layout>
+    )}
+  />
+);
